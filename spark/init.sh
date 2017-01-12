@@ -2,18 +2,13 @@
 
 pushd /root > /dev/null
 
-if [ -d "spark" ]; then
-  echo "Spark seems to be installed. Exiting."
-  return
-fi
-
 # Github tag:
 if [[ "$SPARK_VERSION" == *\|* ]]
 then
   mkdir spark
   pushd spark > /dev/null
   git init
-  repo=`python -c "print '$SPARK_VERSION'.split('|')[0]"` 
+  repo=`python -c "print '$SPARK_VERSION'.split('|')[0]"`
   git_hash=`python -c "print '$SPARK_VERSION'.split('|')[1]"`
   git remote add origin $repo
   git fetch origin
@@ -23,7 +18,7 @@ then
   popd > /dev/null
 
 # Pre-packaged spark version:
-else 
+else
  case "$SPARK_VERSION" in
     0.7.3)
       if [[ "$HADOOP_MAJOR_VERSION" == "1" ]]; then
