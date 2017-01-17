@@ -79,7 +79,8 @@ else
         if [[ "$HADOOP_MINOR_VERSION" == "2.4" ]]; then
           wget http://s3.amazonaws.com/spark-related-packages/spark-$SPARK_VERSION-bin-hadoop2.4.tgz
         elif [[ "$HADOOP_MINOR_VERSION" == "2.6" ]]; then
-          wget http://s3.amazonaws.com/spark-related-packages/spark-$SPARK_VERSION-bin-hadoop2.6.tgz
+          wget http://s3.amazonaws.com/spark-related-packages/spark-$SPARK_VERSION-bin-hadoop2.6.tgz -O /root/spark-$SPARK_VERSION-bin-hadoop2.6.tgz
+          echo "Placed into... `pwd`"
         else
           echo "ERROR: Unknown Hadoop minor version"
           return 1
