@@ -577,6 +577,7 @@ def launch_cluster(conn, opts, cluster_name):
         master_group.authorize('tcp', 22, 22, authorized_address)
         master_group.authorize('tcp', 8080, 8081, authorized_address)
         master_group.authorize('tcp', 8090, 8090, authorized_address)
+        master_group.authorize('tcp', 8090, 8090, jumphost_address)
         master_group.authorize('tcp', 18080, 18080, authorized_address)
         master_group.authorize('tcp', 19999, 19999, authorized_address)
         master_group.authorize('tcp', 50030, 50030, authorized_address)
