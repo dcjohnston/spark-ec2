@@ -122,9 +122,11 @@ else
  esac
 
   echo "Unpacking Spark"
+  echo `pwd`
+  echo "We are here..."
   tar xvzf spark-*.tgz > /tmp/spark-ec2_spark.log
   rm spark-*.tgz
-  mv `ls -d spark-* | grep -v ec2` /root/spark
+  mv `ls -d spark-* | grep -v ec2` spark
 fi
 
 popd > /dev/null
