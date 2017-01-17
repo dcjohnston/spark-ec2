@@ -126,7 +126,7 @@ else
   tar xvzf spark-*.tgz > /tmp/spark-ec2_spark.log
   rm spark-*.tgz
   $dir=`ls -d spark-* | grep -v ec2`
-  mv -n $dir/* /root/spark
+  mv -n ${dir}/* /root/spark
 fi
 
 popd > /dev/null
