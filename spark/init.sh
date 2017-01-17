@@ -125,7 +125,7 @@ else
   echo "Unpacking Spark"
   tar xvzf spark-*.tgz > /tmp/spark-ec2_spark.log
   rm spark-*.tgz
-  $dir=`ls -d spark-* | grep -v ec2`
+  dir=`ls -d spark-* | grep -v ec2`
   mv -n ${dir}/* /root/spark
 fi
 
