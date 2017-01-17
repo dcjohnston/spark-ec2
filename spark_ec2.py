@@ -316,6 +316,9 @@ def parse_args():
         "--authorized-address", type="string", default="0.0.0.0/0",
         help="Address to authorize on created security groups (default: %default)")
     parser.add_option(
+        "--jumphost-address", type="string", default="0.0.0.0/0",
+        help="Address from which this script is run. (default: %default)")
+    parser.add_option(
         "--additional-security-group", type="string", default="",
         help="Additional security group to place the machines in")
     parser.add_option(
@@ -552,6 +555,7 @@ def launch_cluster(conn, opts, cluster_name):
     master_group = get_or_make_group(conn, cluster_name + "-master", opts.vpc_id)
     slave_group = get_or_make_group(conn, cluster_name + "-slaves", opts.vpc_id)
     authorized_address = opts.authorized_address
+    jumphost_address = opts.jumphost_address
     if master_group.rules == []:  # Group was just now created
         if opts.vpc_id is None:
             master_group.authorize(src_group=master_group)
@@ -569,6 +573,7 @@ def launch_cluster(conn, opts, cluster_name):
                                    src_group=slave_group)
             master_group.authorize(ip_protocol='udp', from_port=0, to_port=65535,
                                    src_group=slave_group)
+        master_group.authorize('tcp', 22, 22, jumphost_address)
         master_group.authorize('tcp', 22, 22, authorized_address)
         master_group.authorize('tcp', 8080, 8081, authorized_address)
         master_group.authorize('tcp', 8090, 8090, authorized_address)
@@ -608,6 +613,7 @@ def launch_cluster(conn, opts, cluster_name):
                                   src_group=slave_group)
             slave_group.authorize(ip_protocol='udp', from_port=0, to_port=65535,
                                   src_group=slave_group)
+        slave_group.authorize('tcp', 22, 22, jumphost_address)
         slave_group.authorize('tcp', 22, 22, authorized_address)
         slave_group.authorize('tcp', 8080, 8081, authorized_address)
         slave_group.authorize('tcp', 50060, 50060, authorized_address)
