@@ -296,7 +296,7 @@ def parse_args():
         "-u", "--user", default="root",
         help="The SSH user you want to connect as (default: %default)")
     parser.add_option(
-        "--delete-groups", action="store_true", default=False,
+        "--delete-groups", action="store_true", default=True,
         help="When destroying a cluster, delete the security groups that were created")
     parser.add_option(
         "--use-existing-master", action="store_true", default=False,
@@ -571,6 +571,7 @@ def launch_cluster(conn, opts, cluster_name):
                                    src_group=slave_group)
         master_group.authorize('tcp', 22, 22, authorized_address)
         master_group.authorize('tcp', 8080, 8081, authorized_address)
+        master_group.authorize('tcp', 8090, 8090, authorized_address)
         master_group.authorize('tcp', 18080, 18080, authorized_address)
         master_group.authorize('tcp', 19999, 19999, authorized_address)
         master_group.authorize('tcp', 50030, 50030, authorized_address)
